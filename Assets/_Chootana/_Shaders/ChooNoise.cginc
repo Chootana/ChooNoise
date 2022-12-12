@@ -1,6 +1,4 @@
 ﻿#ifndef _CHOO_NOISE 
-// Upgrade NOTE: excluded shader from DX11 because it uses wrong array syntax (type[size] name)
-#pragma exclude_renderers d3d11
 #define _CHOO_NOISE
 #endif
 
