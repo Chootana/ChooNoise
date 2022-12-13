@@ -2,7 +2,7 @@
 #define _CHOO_NOISE
 #endif
 
-#define k uint3(0x456789ab, 0x6789ab45, 0x89ab4567)
+#define s uint3(0x456789ab, 0x6789ab45, 0x89ab4567)
 #define u uint3(1, 2, 3)
 #define UINT_MAX uint(0xffffffff)
 
@@ -13,25 +13,25 @@
 uint uhash11(uint n) {
     n = n ^ (n << 1);
     n = n ^ (n >> 1);
-    n *= k.x;
+    n *= s.x;
     n = n ^ (n << 1);
-    return n * k.x;
+    return n * s.x;
 }
 
 uint2 uhash22(uint2 n) {
     n ^= (n.yx << u.xy);
     n ^= (n.yx >> u.xy);
-    n *= k.xy;
+    n *= s.xy;
     n ^= (n.yx << u.xy);
-    return n * k.xy;
+    return n * s.xy;
 }
 
 uint3 uhash33(uint3 n) {
     n ^= (n.yzx << u);
     n ^= (n.yzx >> u);
-    n *= k;
+    n *= s;
     n ^= (n.yzx << u);
-    return n * k;
+    return n * s;
 
 }
 /* *** *** */
@@ -94,10 +94,10 @@ float ValueNoise31(float3 p) {
     float v[8];
 
     [unroll]
-    for (int a=0; a<2; a++) {
-        for (int b=0; b<2; b++) {
-            for (int c=0; c<2; c++) {
-                v[a+2*b+4*c] = hash31(n + float3(a, b, c));
+    for (int k=0; k<2; k++) {
+        for (int j=0; j<2; j++) {
+            for (int i=0; i<2; i++) {
+                v[i+2*j+4*k] = hash31(n + float3(i, j, k));
             }
         }
     }
@@ -152,11 +152,11 @@ float PerlinNoise31(float3 p) {
     float v[8];
 
     [unroll]
-    for (int a=0; a<2; a++) {
-        for (int b=0; b<2; b++) {
-            for (int c=0; c<2; c++) {
-                float3 g = normalize(hash33(n + float3(a, b, c)) - float3(0.5, 0.5, 0.5));
-                v[a+2*b+4*c] = dot(g, f - float3(a, b, c));
+    for (int k=0; k<2; k++) {
+        for (int j=0; j<2; j++) {
+            for (int i=0; i<2; i++) {
+                float3 g = normalize(hash33(n + float3(i, j, k)) - float3(0.5, 0.5, 0.5));
+                v[i+2*j+4*k] = dot(g, f - float3(i, j, k));
             }
         }
     }

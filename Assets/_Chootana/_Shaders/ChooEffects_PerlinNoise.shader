@@ -49,7 +49,7 @@
                 float2 pos = i.uv * 10.0;
                 float3 col = (float3)0;
 
-                col.rgb = PerlinNoise31(float3(pos, time));
+                col.rgb = PerlinNoise21(pos);
 
 
                 return float4(col, 1);
